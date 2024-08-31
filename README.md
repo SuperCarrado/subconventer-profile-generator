@@ -1,12 +1,15 @@
 # 自动合成Subconverter的Profile配置文件
 因为profile文件在需要合并多个url的时候，全部写在一行，一旦需要修改难以操作。
+
 因此创建了这个脚本，通过读取各个txt文件然后自动合成profile。
 
 生成的配置文件内容如下：
+```
 [Profile]
 url=订阅地址|其他url
 target=clash
 config=外部配置文件地址
+```
 
 详情请参考原repo的文档：https://github.com/tindy2013/subconverter/blob/master/README-cn.md#%E9%85%8D%E7%BD%AE%E6%A1%A3%E6%A1%88
 
@@ -16,10 +19,10 @@ config=外部配置文件地址
 config/default_url.txt为订阅地址，可以配置多行，每一行都会生成一个profile文件（配置文件以其中的Key部分来命名）。
 
 比如配置文件是：
-
+```
 订阅名1：地址1
 订阅名2：地址2
-
+```
 那么就会生成 订阅名1.ini 和 订阅名2.ini。
 
 ## 附加地址
