@@ -23,7 +23,7 @@ config/default_url.txt为订阅地址，可以配置多行，每一行都会生�
 订阅名1：地址1
 订阅名2：地址2
 ```
-那么就会生成 订阅名1.ini 和 订阅名2.ini。
+那么就会生成 **订阅名1.ini** 和 **订阅名2.ini**。
 
 ## 附加地址
 config/urls目录中为需要合并到最终配置文件的url中的地址，优先保证default_url.txt的地址在前，然后自动合并所有目录中的txt配置的地址，支持订阅地址或者单节点地址。
@@ -32,4 +32,4 @@ config/urls目录中为需要合并到最终配置文件的url中的地址，优
 config/config.txt文件为引用的外部config配置文件地址。
 
 # 生成最终profile
-直接运行 sh convet.sh
+直接运行 sh convert.sh
