@@ -31,6 +31,18 @@ for file in config/urls/*.txt; do
         fi
     fi
 done
+# 读取wireguard目录下的所有conf文件，生成wireguard格式的base64链接，并用|链接
+for file in config/wireguards/*.conf; do
+    if [ -f "$file" ]; then
+        base64_content = $(base64 $file > wg.b64)
+        wireguard_url = "wireguard://$base64_content"
+        if [ -z "$wireguard_url" ]; then
+            url_files_content="$wireguard_url"
+        else
+            url_files_content="$url_files_content|$wireguard_url"
+        fi
+    fi
+done
 
 # 遍历default_url.txt中的每一行，生成对应的输出文件
 while IFS= read -r line; do
