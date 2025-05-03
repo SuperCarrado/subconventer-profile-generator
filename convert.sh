@@ -31,11 +31,12 @@ for file in config/urls/*.txt; do
         fi
     fi
 done
+
 # 读取wireguard目录下的所有conf文件，生成wireguard格式的base64链接，并用|链接
 for file in config/wireguards/*.conf; do
     if [ -f "$file" ]; then
-        base64_content = $(base64 $file > wg.b64)
-        wireguard_url = "wireguard://$base64_content"
+        base64_content="$(base64 $file -w 0)"
+        wireguard_url="wireguard://$base64_content"
         if [ -z "$wireguard_url" ]; then
             url_files_content="$wireguard_url"
         else
@@ -48,20 +49,16 @@ done
 while IFS= read -r line; do
     # 使用awk分割第一部分为name，第二部分为url
     name=$(echo "$line" | awk -F: '{print $1}' | xargs)
-    url=$(echo "$line" | awk -F: '{print $2}'- | sed 's/^[^:]*://')
+    url=$(echo "$line" | awk -F: '{print substr($0, index($0,$2))}' | xargs)
 
-    # 删除前后空格
-    name=$(echo "$name" | xargs)
-    url=$(echo "$url" | xargs)
-    
-    # 检查url是否为空
-    if [ -z "$url" ]; then
-        echo "警告: 跳过无效行 [$line]，因为URL为空。"
+    # 检查name和url是否为空
+    if [ -z "$name" ] || [ -z "$url" ]; then
+        echo "警告: 跳过无效行 [$line]，因为name或URL为空。"
         continue
     fi
     
-    # 生成输出文件名为url的值
-    output_file="${url}.ini"
+    # 生成输出文件名为name的值加上.ini扩展名
+    output_file="${name}.ini"
 
     # 创建并写入output_file
     cat <<EOL > "$output_file"
